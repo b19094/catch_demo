@@ -13,6 +13,8 @@ public class AddFile : MonoBehaviour
     float y = 0.0f;
     float z = 0.0f;
 
+    
+
     // 初期化
     void Start()
     {
@@ -36,6 +38,7 @@ public class AddFile : MonoBehaviour
             GameObject child = obj.transform.Find("Canvas").gameObject;
 
             child.transform.Find("Text").GetComponent<Text>().text = "File" + number;
+
 
             if((int)(cnt%4.0f) == 0)
             {
