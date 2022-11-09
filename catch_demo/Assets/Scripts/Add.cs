@@ -5,17 +5,15 @@ using UnityEngine.UI;
 
 public class Add : MonoBehaviour
 {
-    public GameObject prefabObj;
-    public GameObject prefabToggle;
-    public GameObject parent;
+    string fileName;
 
-    int tmp = 0;
-    float cnt = 0.0f;
-    float cntToggle = 0.0f;
-    float Toggle_y = 0.0f;
-    float Toggle_x = 0.0f;
+    public GameObject attackFalse;
+    public GameObject attackTrue;
+    public GameObject heroFalse;
+    public GameObject heroTrue;
 
-    public List<GameObject> list_cloneFile_ = new List<GameObject>();
+    bool attack = false;
+    bool hero = false;
 
     // 初期化
     void Start()
@@ -23,41 +21,71 @@ public class Add : MonoBehaviour
 
     }
 
-    public void OnClick()
+    void OnCollisionEnter(Collision collision)
     {
-        string number;
-        tmp++;
+        fileName = collision.gameObject.name;
 
-        number = tmp.ToString();
-
-        // プレハブを元にオブジェクトを生成する
-        GameObject obj = Instantiate(prefabObj, new Vector3(-22.5f, 5.0f, 0.0f + cnt), Quaternion.Euler( 0, 180, 0));
-
-        GameObject child = obj.transform.Find("Canvas").gameObject;
-
-        child.transform.Find("Text").GetComponent<Text>().text = "File" + number;
-
-        list_cloneFile_.Add(obj);
-
-        GameObject toggle = Instantiate(prefabToggle, new Vector3(-160.0f + Toggle_x, 210.0f - Toggle_y, 0.0f), Quaternion.Euler(0, 0, 0));
-
-        toggle.transform.Find("Label").GetComponent<Text>().text = "File" + number;
-
-        toggle.transform.SetParent(this.parent.transform, false);
-
-        cntToggle++;
-
-        if (cntToggle > 9) {
-            Toggle_x = Toggle_x + 320.0f;
-            cntToggle = 0.0f;
-        }
-
-        Toggle_y = 40.0f * cntToggle;
-
-        cnt = cnt + 0.5f;
-        if (cnt > 1.0f)
+        if(fileName == "Attack.cs")
         {
-            cnt = -1.0f;
+            attack = true;
         }
+        if (fileName == "Hero.cs")
+        {
+            hero = true;
+        }
+
+        AttackBool();
+        HeroBool();
+
+    }
+
+    void OnCollisionExit(Collision other)
+    {
+        fileName = other.gameObject.name;
+
+        if (fileName == "Attack.cs")
+        {
+            attack = false;
+        }
+        if (fileName == "Hero.cs")
+        {
+            hero = false;
+        }
+
+        AttackBool();
+        HeroBool();
+
+    }
+
+    void AttackBool()
+    {
+        if (attack == true)
+        {
+            attackFalse.SetActive(false);
+            attackTrue.SetActive(true);
+
+        }
+        else
+        {
+            attackFalse.SetActive(true);
+            attackTrue.SetActive(false);
+        }
+        
+    }
+
+    void HeroBool()
+    {
+        if (hero == true)
+        {
+            heroFalse.SetActive(false);
+            heroTrue.SetActive(true);
+
+        }
+        else
+        {
+            heroFalse.SetActive(true);
+            heroTrue.SetActive(false);
+        }
+
     }
 }
