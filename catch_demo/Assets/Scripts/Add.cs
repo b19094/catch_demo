@@ -11,6 +11,7 @@ public class Add : MonoBehaviour
     public GameObject attackTrue;
     public GameObject heroFalse;
     public GameObject heroTrue;
+    public GameObject Canvas;
 
     bool attack = false;
     bool hero = false;
@@ -36,6 +37,11 @@ public class Add : MonoBehaviour
 
         AttackBool();
         HeroBool();
+
+        if (attack == true && hero == true)
+        {
+            Canvas.SetActive(true);
+        }
 
     }
 
